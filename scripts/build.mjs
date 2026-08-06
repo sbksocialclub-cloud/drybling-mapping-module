@@ -1,0 +1,11 @@
+import { rm, mkdir, copyFile, cp, readFile } from 'node:fs/promises';
+import path from 'node:path';
+const root=path.resolve(new URL('..',import.meta.url).pathname);
+const dist=path.join(root,'dist');
+await rm(dist,{recursive:true,force:true});await mkdir(path.join(dist,'src'),{recursive:true});
+for(const file of ['index.html'])await copyFile(path.join(root,file),path.join(dist,file));
+for(const file of ['app.js','audioManager.js','styles.css'])await copyFile(path.join(root,'src',file),path.join(dist,'src',file));
+await cp(path.join(root,'public'),path.join(dist,'public'),{recursive:true});
+const html=await readFile(path.join(dist,'index.html'),'utf8');
+for(const ref of ['./src/styles.css','./src/app.js'])if(!html.includes(ref))throw new Error(`Referencia ausente: ${ref}`);
+console.log('Build correcto: dist/ generado sin dependencias externas.');

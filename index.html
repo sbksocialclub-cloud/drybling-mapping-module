@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Módulo audiovisual cinematográfico — DRYBLING Mapping Module" />
+  <title>DRYBLING — Mapping Module</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <main class="app" aria-label="Experiencia audiovisual inmersiva">
+    <canvas id="scene" aria-label="Escena cinematográfica interactiva"></canvas>
+    <section id="intro" class="intro" role="dialog" aria-modal="true" aria-label="Inicio de la experiencia">
+      <button id="enter" class="enter" type="button" disabled>
+        <span class="enter__title">ENTRAR</span>
+        <span id="status" class="enter__subtitle">Preparando experiencia…</span>
+      </button>
+    </section>
+    <p id="error" class="error" role="alert" aria-live="polite"></p>
+    <button id="replay" class="replay" type="button" hidden>REPETIR</button>
+  </main>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

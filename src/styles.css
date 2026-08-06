@@ -1,0 +1,213 @@
+/**
+ * DRYBLING Mapping Module — Estilos
+ * Módulo audiovisual cinematográfico independiente.
+ * Optimizado para móvil, tablet y escritorio.
+ */
+
+/* ── Variables de diseño ─────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  --bg:     #000;
+  --fg:     #fff;
+  --muted:  #aeb8c2;
+  --glass:  rgba(7, 10, 14, 0.48);
+  --accent: #24d783;
+}
+
+/* ── Reset base ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  /* Prevenir rebote en iOS */
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Arial, sans-serif;
+  color: var(--fg);
+  /* Prevenir selección accidental en móvil */
+  -webkit-user-select: none;
+  user-select: none;
+  /* Prevenir zoom en doble toque en iOS */
+  touch-action: manipulation;
+}
+
+button {
+  font: inherit;
+}
+
+/* ── Contenedor principal ────────────────────────────────────────────────── */
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100dvh; /* dvh: unidad dinámica que excluye la barra del navegador móvil */
+  isolation: isolate;
+  background: #000;
+}
+
+/* ── Canvas de la escena ─────────────────────────────────────────────────── */
+#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+/* ── Pantalla de introducción ────────────────────────────────────────────── */
+.intro {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  /* Padding para safe areas en iPhone X+ */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(30, 42, 54, 0.26),
+    rgba(0, 0, 0, 0.9) 65%
+  );
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+
+.intro.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Botón de entrada ────────────────────────────────────────────────────── */
+.enter {
+  min-width: min(82vw, 360px);
+  padding: 24px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  color: #fff;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari */
+  box-shadow:
+    0 18px 70px rgba(0, 0, 0, 0.45),
+    inset 0 0 30px rgba(255, 255, 255, 0.025);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  /* Área táctil mínima recomendada por WCAG */
+  min-height: 48px;
+}
+
+.enter:not(:disabled):hover,
+.enter:not(:disabled):focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.42);
+  outline: none;
+}
+
+.enter:not(:disabled):active {
+  transform: translateY(0);
+  border-color: var(--accent);
+}
+
+.enter:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.enter__title {
+  display: block;
+  font-size: clamp(24px, 5vw, 38px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  margin-left: 0.22em;
+}
+
+.enter__subtitle {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Mensaje de error ────────────────────────────────────────────────────── */
+.error {
+  position: absolute;
+  z-index: 12;
+  left: 12px;
+  right: 12px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  margin: 0;
+  color: #ff8585;
+  text-align: center;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+/* ── Botón de repetición ─────────────────────────────────────────────────── */
+.replay {
+  position: absolute;
+  z-index: 8;
+  right: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  /* Área táctil mínima */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.replay:hover,
+.replay:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* ── Ajustes para pantallas pequeñas (móvil) ─────────────────────────────── */
+@media (max-width: 480px) {
+  .enter {
+    min-width: 88vw;
+    padding: 20px 22px;
+  }
+
+  .enter__title {
+    font-size: clamp(22px, 7vw, 32px);
+  }
+}
+
+/* ── Ajustes para tablet ─────────────────────────────────────────────────── */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .enter {
+    min-width: min(70vw, 380px);
+  }
+}
+
+/* ── Reducción de movimiento (accesibilidad) ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .enter {
+    transition: none;
+  }
+}
